@@ -34,3 +34,5 @@ output "instance_2_ip" {
 output "instance_2_id" {
   value = module.web_instance_2.instance_id
 }
+
+
