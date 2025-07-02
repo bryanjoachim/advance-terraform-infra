@@ -1,9 +1,9 @@
 resource "aws_security_group" "this" {
-  name = "${var.instance_name}-sg"
+  name        = "${var.instance_name}-sg"
   description = "Allow ssh and http"
-  vpc_id = var.vpc_id
+  vpc_id      = var.vpc_id
 
-    ingress {
+  ingress {
     description = "SSH"
     from_port   = 22
     to_port     = 22
@@ -31,12 +31,12 @@ resource "aws_security_group" "this" {
 
 
 resource "aws_instance" "this" {
-  ami = "ami-05ffe3c48a9991133"
-  instance_type = var.instance_type
-  subnet_id = var.subnet_id
-  vpc_security_group_ids = [ aws_security_group.this.id ]
+  ami                    = "ami-05ffe3c48a9991133"
+  instance_type          = var.instance_type
+  subnet_id              = var.subnet_id
+  vpc_security_group_ids = [aws_security_group.this.id]
 
-  tags ={
+  tags = {
     Environment = terraform.workspace
   }
 }
