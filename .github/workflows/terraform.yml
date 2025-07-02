@@ -6,10 +6,6 @@ on:
   push:
     branches: [ main ]
 
-env:
-  TF_IN_AUTOMATION: true
-  TF_CLI_ARGS: "-input=false"
-
 jobs:
   terraform:
     name: Terraform Format, Validate & Plan
@@ -19,13 +15,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Terraform Format Check
+        run: terraform fmt -check -recursive
+
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.6.6
-
-      - name: Terraform Format Check
-        run: terraform fmt -recursive
 
       - name: Terraform Init
         run: terraform init
@@ -35,6 +31,9 @@ jobs:
 
       - name: Terraform Plan
         run: terraform plan -out=tfplan
+        env:
+          TF_IN_AUTOMATION: true
+          TF_CLI_ARGS: "-input=false"
 
       - name: Upload Plan Artifact
         uses: actions/upload-artifact@v4
@@ -53,7 +52,7 @@ jobs:
         uses: trstringer/manual-approval@v1
         with:
           secret: ${{ secrets.GITHUB_TOKEN }}
-          approvers: bryanjoachim
+          approvers: bryanjoachim  
           minimum-approvals: 1
           issue-title: "Approve Terraform Apply to Production"
           issue-body: "Please review and approve the Terraform plan for production."
@@ -85,5 +84,7 @@ jobs:
       - name: Terraform Apply
         run: terraform apply -auto-approve tfplan
         env:
+          TF_IN_AUTOMATION: true
+          TF_CLI_ARGS: "-input=false"
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
