@@ -3,6 +3,8 @@ name: Terraform CI/CD
 on:
   pull_request:
     branches: [ main ]
+  push:
+    branches: [ main ]
 
 env:
   TF_IN_AUTOMATION: true
@@ -55,7 +57,7 @@ jobs:
         uses: trstringer/manual-approval@v1
         with:
           secret: ${{ secrets.GITHUB_TOKEN }}
-          approvers: your-github-username
+          approvers: bryanjoachim
           minimum-approvals: 1
           issue-title: "Approve Terraform Apply to Production"
           issue-body: "Please review and approve the Terraform plan for production."
