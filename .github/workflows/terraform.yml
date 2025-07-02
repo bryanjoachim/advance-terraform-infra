@@ -56,7 +56,7 @@ jobs:
       - name: Await manual approval
         uses: trstringer/manual-approval@v1
         with:
-          secret: ${{ secrets.GITHUB_TOKEN }}
+          secret: ${{ secrets.TOKEN_GITHUB }}
           approvers: bryanjoachim  
           minimum-approvals: 1
           issue-title: "Approve Terraform Apply to Production"
