@@ -25,7 +25,7 @@ jobs:
           terraform_version: 1.6.6
 
       - name: Terraform Format Check
-        run: terraform fmt -check
+        run: terraform fmt -check -recursive
 
       - name: Terraform Init
         run: terraform init
@@ -53,7 +53,7 @@ jobs:
         uses: trstringer/manual-approval@v1
         with:
           secret: ${{ secrets.GITHUB_TOKEN }}
-          approvers: bryanjoachim  
+          approvers: bryanjoachim
           minimum-approvals: 1
           issue-title: "Approve Terraform Apply to Production"
           issue-body: "Please review and approve the Terraform plan for production."
