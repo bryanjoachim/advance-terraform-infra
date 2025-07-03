@@ -19,7 +19,6 @@ module "web_instance_1" {
   instance_name = "web1"
   vpc_id        = "vpc-030d2a36977e658d0"
   subnet_id     = "subnet-0e25eb15377a8aa73"
-
 }
 
 module "web_instance_2" {
